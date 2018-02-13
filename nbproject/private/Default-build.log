@@ -1,0 +1,30 @@
+/usr/bin/make  all-recursive
+make[1]: Map '/home/wim/xfce4-sample-plugin' wordt binnengegaan
+Making all in icons
+make[2]: Map '/home/wim/xfce4-sample-plugin/icons' wordt binnengegaan
+Making all in 48x48
+make[3]: Map '/home/wim/xfce4-sample-plugin/icons/48x48' wordt binnengegaan
+make[3]: Er hoeft niets gedaan te worden voor 'all'.
+make[3]: Map '/home/wim/xfce4-sample-plugin/icons/48x48' wordt verlaten
+Making all in scalable
+make[3]: Map '/home/wim/xfce4-sample-plugin/icons/scalable' wordt binnengegaan
+make[3]: Er hoeft niets gedaan te worden voor 'all'.
+make[3]: Map '/home/wim/xfce4-sample-plugin/icons/scalable' wordt verlaten
+make[3]: Map '/home/wim/xfce4-sample-plugin/icons' wordt binnengegaan
+make[3]: Er hoeft niets gedaan te worden voor 'all-am'.
+make[3]: Map '/home/wim/xfce4-sample-plugin/icons' wordt verlaten
+make[2]: Map '/home/wim/xfce4-sample-plugin/icons' wordt verlaten
+Making all in panel-plugin
+make[2]: Map '/home/wim/xfce4-sample-plugin/panel-plugin' wordt binnengegaan
+  CC       libsample_la-sample.lo
+  CC       libsample_la-sample-dialogs.lo
+  CCLD     libsample.la
+  ITMRG  sample.desktop
+make[2]: Map '/home/wim/xfce4-sample-plugin/panel-plugin' wordt verlaten
+Making all in po
+make[2]: Map '/home/wim/xfce4-sample-plugin/po' wordt binnengegaan
+make[2]: Er hoeft niets gedaan te worden voor 'all'.
+make[2]: Map '/home/wim/xfce4-sample-plugin/po' wordt verlaten
+make[2]: Map '/home/wim/xfce4-sample-plugin' wordt binnengegaan
+make[2]: Map '/home/wim/xfce4-sample-plugin' wordt verlaten
+make[1]: Map '/home/wim/xfce4-sample-plugin' wordt verlaten
