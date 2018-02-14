@@ -29,9 +29,11 @@ typedef struct
 
     /* panel widgets */
     GtkWidget       *ebox;
-    GtkWidget       *hvbox;
-    GtkWidget       *label;
+    GtkWidget       *hvbox;   
     GtkWidget       *combobox;
+    GtkWidget      *button;
+    gint            counter;
+    gint            maxcounter;
     
 
     /* sample settings */

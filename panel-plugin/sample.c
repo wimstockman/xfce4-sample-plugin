@@ -47,18 +47,57 @@ sample_construct (XfcePanelPlugin *plugin);
 /* register the plugin */
 XFCE_PANEL_PLUGIN_REGISTER (sample_construct);
 
+static void combobox_changed(GtkWidget *combobox, SamplePlugin *sample)
+{
+    tilerole(sample);
+   
+        
+}
+void tilerole(SamplePlugin *sample)
+{
+    const char *input = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(sample->combobox));
+    gboolean result;
+    char * np = (char *) input ;
+        char * ip = "/home/wim/python/3.py ";       
+        char *str = malloc(strlen(ip)+strlen(np)+1);
+        strcpy(str,ip);
+        strcat(str,np);
+    result = g_spawn_command_line_async (str, NULL);
 
-static gboolean entry_buttonpress_cb(GtkWidget *entry, GdkEventButton *event, XfcePanelPlugin *plugin)
+}
+static gboolean button_clicked(GtkWidget *entry, GdkEventButton *event, SamplePlugin *sample)
+{
+    
+    tilerole(sample);
+        sample->counter = sample->counter + 1;
+    if (sample->counter >= sample->maxcounter) {sample->counter = 0; }
+    gtk_combo_box_set_active(GTK_COMBO_BOX(sample->combobox), sample->counter);
+    
+}
+static gboolean entry_buttonpress_cb(GtkWidget *entry, GdkEventButton *event, SamplePlugin *sample)
 {
     GtkWidget *toplevel;
-
+    gboolean result;
+    gchar *input;
     toplevel = gtk_widget_get_toplevel(entry);
 
-    if (event->button != 3 && toplevel && gtk_widget_get_window(toplevel)) {
-          xfce_panel_plugin_focus_widget(plugin, entry);
+    if (event->button != 3 && toplevel && gtk_widget_get_window(toplevel)) {        
+        xfce_panel_plugin_focus_widget(sample->plugin, entry);
+        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "70 100 10 10");
+           return FALSE;
+        
+       
+       
     }
-    return FALSE;
+    else
+    {
+        tilerole(sample);
+        return TRUE;
+    }
+ 
 }
+   
+
 
 void
 sample_save (XfcePanelPlugin *plugin,
@@ -94,10 +133,12 @@ sample_save (XfcePanelPlugin *plugin,
       xfce_rc_close (rc);
     }
 }
+
 /// dit moeten we nog doen
 static gboolean entry_keypress_cb(GtkWidget *entry, GdkEventKey *event, SamplePlugin *sample)
 {
-    const gchar *key = NULL;   /* keyword */
+/*
+    const gchar *key = NULL;   
 
     switch (event->keyval) {
         case GDK_KEY_Return:
@@ -105,13 +146,14 @@ static gboolean entry_keypress_cb(GtkWidget *entry, GdkEventKey *event, SamplePl
             key = gtk_entry_get_text(GTK_ENTRY(entry));
 
             
-                gtk_entry_set_text(GTK_ENTRY(entry), "");  /* clear the entry */
+                gtk_entry_set_text(GTK_ENTRY(entry), "");  
             
             return TRUE;
         default:
-            /* hand over to default signal handler */
+            
             return FALSE;
     }
+ */ 
 }
 
 static void
@@ -164,7 +206,8 @@ sample_new (XfcePanelPlugin *plugin)
 {
   SamplePlugin   *sample;
   GtkOrientation  orientation;
-  GtkWidget      *label;
+  GtkWidget      *label; 
+  gint            counter;
   
 
   /* allocate memory for the plugin structure */
@@ -179,36 +222,48 @@ sample_new (XfcePanelPlugin *plugin)
   /* get the current orientation */
   orientation = xfce_panel_plugin_get_orientation (plugin);
 
+  
+  sample->counter = 0;
+  sample->maxcounter = 4;
+  
+  
+  
   /* create some panel widgets */
+  
+  
   sample->ebox = gtk_event_box_new ();
   gtk_widget_show (sample->ebox);
 
   sample->hvbox = gtk_box_new (orientation, 3);
   gtk_widget_show (sample->hvbox);
   gtk_container_add (GTK_CONTAINER (sample->ebox), sample->hvbox);
-
-  /* some sample widgets */
+  /*
+  sample->combobox = gtk_entry_new();
+  gtk_entry_set_text(sample->combobox ,"50 50 50 50");
+  gtk_widget_show(sample->combobox) ;
+  */
+  
+  
     sample->combobox = gtk_combo_box_text_new_with_entry();
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "Oak");
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "Birch");
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "Sycamore");
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "Willow");
-    gtk_combo_box_set_active(GTK_COMBO_BOX(sample->combobox), 0);
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "50 50 0 0");
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "50 50 50 50");
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "30 50 50 50");
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "70 100 0 0");
+  
     gtk_widget_show(sample->combobox) ;
+  
     g_signal_connect(sample->combobox, "button-press-event",G_CALLBACK(entry_buttonpress_cb), sample);
-    g_signal_connect(sample->combobox, "key-press-event", G_CALLBACK(entry_keypress_cb), sample);
-    
+    //g_signal_connect(sample->combobox, "key-press-event", G_CALLBACK(entry_keypress_cb), sample);
+    g_signal_connect(sample->combobox,"changed", G_CALLBACK(combobox_changed),sample);
   gtk_box_pack_start (GTK_BOX (sample->hvbox), sample->combobox, FALSE, FALSE, 0);
+    gtk_combo_box_set_active(GTK_COMBO_BOX(sample->combobox), sample->counter);
   
-  label = gtk_label_new (_("Sample"));
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (sample->hvbox), label, FALSE, FALSE, 0);
+  
+  sample->button = gtk_button_new_with_label("Resize");  
+  g_signal_connect(GTK_BUTTON(sample->button), "clicked", G_CALLBACK(button_clicked),sample);
+  gtk_widget_show (sample->button);
+  gtk_box_pack_start (GTK_BOX (sample->hvbox),sample->button , FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Plugin Testen"));
-  gtk_widget_show (label);
-  gtk_box_pack_start (GTK_BOX (sample->hvbox), label, FALSE, FALSE, 0);
-  
-  
   return sample;
 }
 
@@ -230,7 +285,7 @@ sample_free (XfcePanelPlugin *plugin,
   /* cleanup the settings */
   if (G_LIKELY (sample->setting1 != NULL))
     g_free (sample->setting1);
-
+  
   /* free the plugin structure */
   g_slice_free (SamplePlugin, sample);
 }
