@@ -17,10 +17,13 @@
         </df>
         <df name=".libs">
         </df>
+        <in>gemu-glib-util.c</in>
+        <in>gemu-glib-util.h</in>
         <in>sample-dialogs.c</in>
         <in>sample-dialogs.h</in>
         <in>sample.c</in>
         <in>sample.h</in>
+        <in>tile.c</in>
       </df>
       <df name="po">
       </df>

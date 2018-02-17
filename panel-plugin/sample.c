@@ -36,7 +36,7 @@
 #define DEFAULT_SETTING2 1
 #define DEFAULT_SETTING3 FALSE
 
-
+static gboolean stop = 0;
 
 
 /* prototypes */
@@ -49,7 +49,9 @@ XFCE_PANEL_PLUGIN_REGISTER (sample_construct);
 
 static void combobox_changed(GtkWidget *combobox, SamplePlugin *sample)
 {
-    tilerole(sample);
+    printf(":%d:\n", stop);
+    if (stop == FALSE)
+    {tilerole(sample);}
    
         
 }
@@ -63,7 +65,9 @@ void tilerole(SamplePlugin *sample)
         strcpy(str,ip);
         strcat(str,np);
     result = g_spawn_command_line_async (str, NULL);
-
+    printf(":%s:\n", str);
+    printf(":%s:\n", "Hello, world!");
+    //printf(":%d:\n", result);
 }
 static gboolean button_clicked(GtkWidget *entry, GdkEventButton *event, SamplePlugin *sample)
 {
@@ -137,23 +141,22 @@ sample_save (XfcePanelPlugin *plugin,
 /// dit moeten we nog doen
 static gboolean entry_keypress_cb(GtkWidget *entry, GdkEventKey *event, SamplePlugin *sample)
 {
-/*
-    const gchar *key = NULL;   
+
+     printf(":%s:\n", "KEY PRESS!");
+     
 
     switch (event->keyval) {
         case GDK_KEY_Return:
         case GDK_KEY_KP_Enter:
-            key = gtk_entry_get_text(GTK_ENTRY(entry));
-
-            
-                gtk_entry_set_text(GTK_ENTRY(entry), "");  
-            
-            return TRUE;
+            stop = FALSE;
+            sample->counter = 0;
+            tilerole(sample);
+            return FALSE;
         default:
-            
+            stop = TRUE;
             return FALSE;
     }
- */ 
+ 
 }
 
 static void
@@ -253,7 +256,8 @@ sample_new (XfcePanelPlugin *plugin)
     gtk_widget_show(sample->combobox) ;
   
     g_signal_connect(sample->combobox, "button-press-event",G_CALLBACK(entry_buttonpress_cb), sample);
-    //g_signal_connect(sample->combobox, "key-press-event", G_CALLBACK(entry_keypress_cb), sample);
+    g_signal_connect(GTK_ENTRY(gtk_bin_get_child(sample->combobox)), "key-press-event", G_CALLBACK(entry_keypress_cb), sample);
+   //  g_signal_connect(GTK_ENTRY(gtk_bin_get_child(sample->combobox)), "activate", G_CALLBACK(entry_keypress_cb), sample);
     g_signal_connect(sample->combobox,"changed", G_CALLBACK(combobox_changed),sample);
   gtk_box_pack_start (GTK_BOX (sample->hvbox), sample->combobox, FALSE, FALSE, 0);
     gtk_combo_box_set_active(GTK_COMBO_BOX(sample->combobox), sample->counter);
@@ -263,6 +267,7 @@ sample_new (XfcePanelPlugin *plugin)
   g_signal_connect(GTK_BUTTON(sample->button), "clicked", G_CALLBACK(button_clicked),sample);
   gtk_widget_show (sample->button);
   gtk_box_pack_start (GTK_BOX (sample->hvbox),sample->button , FALSE, FALSE, 0);
+  
 
   return sample;
 }

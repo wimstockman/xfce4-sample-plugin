@@ -19,7 +19,7 @@
 
 GETTEXT_PACKAGE = xfce4-sample-plugin
 PACKAGE = xfce4-sample-plugin
-VERSION = 0.0.3git-15015f1
+VERSION = 0.0.3git-b9d35ee
 
 SHELL = /bin/sh
 

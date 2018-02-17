@@ -17,7 +17,7 @@ m4_define([sample_version_major], [0])
 m4_define([sample_version_minor], [0])
 m4_define([sample_version_micro], [3])
 m4_define([sample_version_nano],  []) dnl leave this empty to have no nano version
-m4_define([sample_version_build], [15015f1])
+m4_define([sample_version_build], [b9d35ee])
 m4_define([sample_version_tag], [git])
 m4_define([sample_version], [sample_version_major().sample_version_minor().sample_version_micro()ifelse(sample_version_nano(), [], [], [.sample_version_nano()])ifelse(sample_version_tag(), [git], [sample_version_tag()-sample_version_build()], [sample_version_tag()])])
 m4_define([sample_default_debug], [ifelse(sample_version_tag(), [git], [yes], [minimum])])

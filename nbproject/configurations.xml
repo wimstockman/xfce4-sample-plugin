@@ -3,8 +3,11 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="panel-plugin">
+        <in>gemu-glib-util.c</in>
+        <in>gemu-glib-util.h</in>
         <in>sample-dialogs.c</in>
         <in>sample.c</in>
+        <in>tile.c</in>
       </df>
     </df>
     <logicalFolder name="ExternalFiles"
@@ -77,6 +80,10 @@
           <preBuildCommand>./configure CC=${IDE_CC} CXX=${IDE_CXX} CFLAGS="-g3 -gdwarf-2" CXXFLAGS="-g3 -gdwarf-2"</preBuildCommand>
         </preBuild>
       </makefileType>
+      <item path="panel-plugin/gemu-glib-util.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="panel-plugin/gemu-glib-util.h" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="panel-plugin/sample-dialogs.c" ex="false" tool="0" flavor2="0">
         <cTool flags="0">
         </cTool>
@@ -84,6 +91,8 @@
       <item path="panel-plugin/sample.c" ex="false" tool="0" flavor2="0">
         <cTool flags="0">
         </cTool>
+      </item>
+      <item path="panel-plugin/tile.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
   </confs>
