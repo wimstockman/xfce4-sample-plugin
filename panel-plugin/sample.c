@@ -29,6 +29,7 @@
 #include <libxfce4panel/xfce-panel-plugin.h>
 
 #include "sample.h"
+#include "tile.c"
 #include "sample-dialogs.h"
 
 /* default settings */
@@ -64,7 +65,15 @@ void tilerole(SamplePlugin *sample)
         char *str = malloc(strlen(ip)+strlen(np)+1);
         strcpy(str,ip);
         strcat(str,np);
-    result = g_spawn_command_line_async (str, NULL);
+           gint h = 300 ;
+    gint w = 700 ;
+    gint x = 10;
+    gint y = 10;
+    
+    
+    tilerole_new(h,w,x,y);
+
+  //  result = g_spawn_command_line_async (str, NULL);
     printf(":%s:\n", str);
     printf(":%s:\n", "Hello, world!");
     //printf(":%d:\n", result);

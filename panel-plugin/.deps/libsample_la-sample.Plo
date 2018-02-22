@@ -681,7 +681,7 @@ libsample_la-sample.lo: sample.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
  /usr/include/bits/floatn.h /usr/include/alloca.h \
  /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
- sample.h sample-dialogs.h
+ sample.h tile.c sample-dialogs.h
 
 /usr/include/stdc-predef.h:
 
@@ -2230,5 +2230,7 @@ libsample_la-sample.lo: sample.c /usr/include/stdc-predef.h ../config.h \
 /usr/include/bits/stdlib-float.h:
 
 sample.h:
+
+tile.c:
 
 sample-dialogs.h:
