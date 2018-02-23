@@ -48,35 +48,44 @@ sample_construct (XfcePanelPlugin *plugin);
 /* register the plugin */
 XFCE_PANEL_PLUGIN_REGISTER (sample_construct);
 
-static void combobox_changed(GtkWidget *combobox, SamplePlugin *sample)
-{
-    printf(":%d:\n", stop);
-    if (stop == FALSE)
-    {tilerole(sample);}
-   
-        
-}
+
 void tilerole(SamplePlugin *sample)
 {
+    gchar **tokens ;
+    gint i;
     const char *input = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(sample->combobox));
     gboolean result;
     char * np = (char *) input ;
-        char * ip = "/home/wim/python/3.py ";       
-        char *str = malloc(strlen(ip)+strlen(np)+1);
-        strcpy(str,ip);
-        strcat(str,np);
-           gint h = 300 ;
-    gint w = 700 ;
-    gint x = 10;
-    gint y = 10;
-    
+     //   char * ip = "/home/wim/python/3.py ";       
+      //  char *str = malloc(strlen(ip)+strlen(np)+1);
+      //  strcpy(str,ip);
+      //  strcat(str,np);
+        
+        tokens = g_str_tokenize_and_fold(input,NULL,NULL);
+        
+    gint h = (gint)atoi(tokens[0]) ;
+    gint w = (gint)atoi(tokens[1]) ;
+    gint x = (gint)atoi(tokens[2]) ;
+    gint y = (gint)atoi(tokens[3]) ;
     
     tilerole_new(h,w,x,y);
+  //  g_free(tokens);
+   
+    
 
   //  result = g_spawn_command_line_async (str, NULL);
-    printf(":%s:\n", str);
-    printf(":%s:\n", "Hello, world!");
+    
+  
     //printf(":%d:\n", result);
+}
+
+static void combobox_changed(GtkWidget *combobox, SamplePlugin *sample)
+{
+    printf(":%d:\n", stop);
+    if (stop == FALSE){
+    tilerole(sample);}
+   
+        
 }
 static gboolean button_clicked(GtkWidget *entry, GdkEventButton *event, SamplePlugin *sample)
 {
@@ -95,8 +104,7 @@ static gboolean entry_buttonpress_cb(GtkWidget *entry, GdkEventButton *event, Sa
     toplevel = gtk_widget_get_toplevel(entry);
 
     if (event->button != 3 && toplevel && gtk_widget_get_window(toplevel)) {        
-        xfce_panel_plugin_focus_widget(sample->plugin, entry);
-        gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "70 100 10 10");
+        xfce_panel_plugin_focus_widget(sample->plugin, entry);        
            return FALSE;
         
        
@@ -104,7 +112,7 @@ static gboolean entry_buttonpress_cb(GtkWidget *entry, GdkEventButton *event, Sa
     }
     else
     {
-        tilerole(sample);
+    tilerole(sample);
         return TRUE;
     }
  
@@ -159,7 +167,11 @@ static gboolean entry_keypress_cb(GtkWidget *entry, GdkEventKey *event, SamplePl
         case GDK_KEY_KP_Enter:
             stop = FALSE;
             sample->counter = 0;
-            tilerole(sample);
+            gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(sample->combobox)));
+            sample->counter = sample->maxcounter;
+            sample->maxcounter +=1 ;
+            
+            
             return FALSE;
         default:
             stop = TRUE;

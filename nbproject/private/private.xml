@@ -10,8 +10,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/wim/xfce4-sample-plugin/panel-plugin/gemu-glib-util.h</file>
             <file>file:/home/wim/xfce4-sample-plugin/panel-plugin/sample.c</file>
             <file>file:/home/wim/xfce4-sample-plugin/panel-plugin/tile.c</file>
+            <file>file:/home/wim/xfce4-sample-plugin/panel-plugin/sample.h</file>
+            <file>file:/home/wim/xfce4-sample-plugin/panel-plugin/gemu-glib-util.c</file>
         </group>
     </open-files>
+    <preferences xmlns="http://www.netbeans.org/ns/auxiliary-configuration-preferences/1">
+        <module name="org-netbeans-modules-cnd-discovery">
+            <property name="rootFolder" value="/home/wim/xfce4-sample-plugin"/>
+            <property name="model-folder" value="/home/wim/xfce4-sample-plugin"/>
+            <property name="libraries" value="/usr/include/gtk-3.0/gdk/x11/gdkx-autocleanups.h;/usr/include/gtk-3.0/gdk/x11/gdkx11applaunchcontext.h;/usr/include/gtk-3.0/gdk/x11/gdkx11cursor.h;/usr/include/gtk-3.0/gdk/x11/gdkx11device-core.h;/usr/include/gtk-3.0/gdk/x11/gdkx11device-xi2.h;/usr/include/gtk-3.0/gdk/x11/gdkx11device.h;/usr/include/gtk-3.0/gdk/x11/gdkx11devicemanager-core.h;/usr/include/gtk-3.0/gdk/x11/gdkx11devicemanager-xi2.h;/usr/include/gtk-3.0/gdk/x11/gdkx11devicemanager.h;/usr/include/gtk-3.0/gdk/x11/gdkx11display.h;/usr/include/gtk-3.0/gdk/x11/gdkx11displaymanager.h;/usr/include/gtk-3.0/gdk/x11/gdkx11dnd.h;/usr/include/gtk-3.0/gdk/x11/gdkx11glcontext.h;/usr/include/gtk-3.0/gdk/x11/gdkx11keys.h;/usr/include/gtk-3.0/gdk/x11/gdkx11monitor.h;/usr/include/gtk-3.0/gdk/x11/gdkx11property.h;/usr/include/gtk-3.0/gdk/x11/gdkx11screen.h;/usr/include/gtk-3.0/gdk/x11/gdkx11selection.h;/usr/include/gtk-3.0/gdk/x11/gdkx11utils.h;/usr/include/gtk-3.0/gdk/x11/gdkx11visual.h;/usr/include/gtk-3.0/gdk/x11/gdkx11window.h"/>
+            <property name="executable" value="/home/wim/xfce4-sample-plugin/panel-plugin/tile*/home/wim/xfce4-sample-plugin"/>
+        </module>
+    </preferences>
 </project-private>

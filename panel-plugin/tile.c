@@ -10,24 +10,42 @@ int nIndex;
 GList * winlist ;
 GList * list ;
 gint desktop;
+gint moni;
 
 GdkWindow *win;
+GdkScreen *scr;
 GdkWindowState state;
-
+GdkRectangle rect;
 
 
 //tile = g_slice_new0 (tilerole);
 
 win = gdk_screen_get_active_window (gdk_screen_get_default());
 desktop = gdk_x11_window_get_desktop(win);
+printf(":%s:\n", "Hello, tile!");
+
+scr = gdk_window_get_screen(win);
+moni = gdk_screen_get_monitor_at_window(scr,win);
+gdk_screen_get_monitor_geometry(scr,moni,&rect);
+
+printf("monitor values in pixels h:%d w:%d x:%d y:%d\n",rect.height,rect.width,rect.x,rect.y );   
+printf("resize values in percentage h:%d w:%d x:%d y:%d\n",h,w,x,y );   
+
+w = (gint)((float)w /100 * rect.width);
+h = (gint)((float)h /100 * rect.height -20);
+x = (gint)(((float)x/100 * rect.width) + rect.x); 
+y = (gint)(((float)y/100 * rect.height) + rect.y); 
+
+
 if (desktop > -1)
 {
     
     state = gdk_window_get_state(GDK_WINDOW(win));
     
     //g_print ("sn: %u\n",gtk_window_get_default_title(win));
-   gdk_window_unmaximize(win);
-    gdk_window_move_resize(GDK_WINDOW(win),x,y,h,w);
+    gdk_window_unmaximize(win);
+    gdk_window_move_resize(GDK_WINDOW(win),x,y,w,h);
+printf("resize values in pixels h:%d w:%d x:%d y:%d\n",h,w,x,y );   
     
 g_print ("desk: %s\n",gdk_x11_screen_get_window_manager_name(gdk_screen_get_default()));
 }
@@ -59,6 +77,9 @@ winlist = g_list_reverse (winlist);
         
  }        //g_print ("%s\n", gdk_property_get(list->data,"WM_NAME",2,0));
   */
+
+
+
 }
 
 
