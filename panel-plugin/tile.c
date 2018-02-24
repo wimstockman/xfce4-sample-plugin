@@ -4,29 +4,28 @@
 
 static void tilerole_new(gint h,gint w,gint x,gint y )
 { 
-gdk_init(NULL,NULL);   
-int nIndex;
 //tilerole *tile;    
-GList * winlist ;
-GList * list ;
-gint desktop;
-gint moni;
+//GList * winlist ;
+//GList * list ;
 
+GdkRectangle rect ;
+GdkScreen *scr ;
 GdkWindow *win;
-GdkScreen *scr;
-GdkWindowState state;
-GdkRectangle rect;
+gint desktop;
+
+gdk_init(NULL,NULL);   
+win = gdk_screen_get_active_window(gdk_screen_get_default());
 
 
-//tile = g_slice_new0 (tilerole);
 
-win = gdk_screen_get_active_window (gdk_screen_get_default());
+
 desktop = gdk_x11_window_get_desktop(win);
 printf(":%s:\n", "Hello, tile!");
 
 scr = gdk_window_get_screen(win);
-moni = gdk_screen_get_monitor_at_window(scr,win);
-gdk_screen_get_monitor_geometry(scr,moni,&rect);
+gdk_monitor_get_geometry (gdk_display_get_monitor_at_window (gdk_screen_get_display (scr),win),&rect);
+
+
 
 printf("monitor values in pixels h:%d w:%d x:%d y:%d\n",rect.height,rect.width,rect.x,rect.y );   
 printf("resize values in percentage h:%d w:%d x:%d y:%d\n",h,w,x,y );   
@@ -39,8 +38,8 @@ y = (gint)(((float)y/100 * rect.height) + rect.y);
 
 if (desktop > -1)
 {
-    
-    state = gdk_window_get_state(GDK_WINDOW(win));
+    //GdkWindowState state;    
+    //state = gdk_window_get_state(GDK_WINDOW(win));
     
     //g_print ("sn: %u\n",gtk_window_get_default_title(win));
     gdk_window_unmaximize(win);
@@ -84,7 +83,7 @@ winlist = g_list_reverse (winlist);
 
 
 
-void main()
+int main(void)
 {
     gint h = 300 ;
     gint w = 700 ;
@@ -93,5 +92,6 @@ void main()
     
     
     tilerole_new(h,w,x,y);
+    return 0;
 
 }

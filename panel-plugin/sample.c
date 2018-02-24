@@ -1,6 +1,6 @@
 /*  $Id$
  *
- *  Copyright (C) 2012 John Doo <john@foo.org>
+ *  Copyright (C) 2018 Wim s<john@foo.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,10 +52,15 @@ XFCE_PANEL_PLUGIN_REGISTER (sample_construct);
 void tilerole(SamplePlugin *sample)
 {
     gchar **tokens ;
-    gint i;
+    gint h;
+    gint w;
+    gint x;
+    gint y;
+    
+    //gint i;
     const char *input = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(sample->combobox));
-    gboolean result;
-    char * np = (char *) input ;
+    //gboolean result;
+    //char * np = (char *) input ;
      //   char * ip = "/home/wim/python/3.py ";       
       //  char *str = malloc(strlen(ip)+strlen(np)+1);
       //  strcpy(str,ip);
@@ -63,10 +68,10 @@ void tilerole(SamplePlugin *sample)
         
         tokens = g_str_tokenize_and_fold(input,NULL,NULL);
         
-    gint h = (gint)atoi(tokens[0]) ;
-    gint w = (gint)atoi(tokens[1]) ;
-    gint x = (gint)atoi(tokens[2]) ;
-    gint y = (gint)atoi(tokens[3]) ;
+    w = (gint)atoi(tokens[0]) ;
+    h = (gint)atoi(tokens[1]) ;
+    x = (gint)atoi(tokens[2]) ;
+    y = (gint)atoi(tokens[3]) ;
     
     tilerole_new(h,w,x,y);
   //  g_free(tokens);
@@ -81,7 +86,7 @@ void tilerole(SamplePlugin *sample)
 
 static void combobox_changed(GtkWidget *combobox, SamplePlugin *sample)
 {
-    printf(":%d:\n", stop);
+    printf("stop:%d:\n", stop);
     if (stop == FALSE){
     tilerole(sample);}
    
@@ -89,19 +94,22 @@ static void combobox_changed(GtkWidget *combobox, SamplePlugin *sample)
 }
 static gboolean button_clicked(GtkWidget *entry, GdkEventButton *event, SamplePlugin *sample)
 {
-    
+    if (sample->counter>=0 )
+    {
     tilerole(sample);
         sample->counter = sample->counter + 1;
     if (sample->counter >= sample->maxcounter) {sample->counter = 0; }
     gtk_combo_box_set_active(GTK_COMBO_BOX(sample->combobox), sample->counter);
-    
+    }
+    else
+    {
+    sample->counter = 0;
+    }
+          return FALSE;
 }
 static gboolean entry_buttonpress_cb(GtkWidget *entry, GdkEventButton *event, SamplePlugin *sample)
 {
-    GtkWidget *toplevel;
-    gboolean result;
-    gchar *input;
-    toplevel = gtk_widget_get_toplevel(entry);
+    GtkWidget *toplevel = gtk_widget_get_toplevel(entry);
 
     if (event->button != 3 && toplevel && gtk_widget_get_window(toplevel)) {        
         xfce_panel_plugin_focus_widget(sample->plugin, entry);        
@@ -230,8 +238,8 @@ sample_new (XfcePanelPlugin *plugin)
 {
   SamplePlugin   *sample;
   GtkOrientation  orientation;
-  GtkWidget      *label; 
-  gint            counter;
+  
+  
   
 
   /* allocate memory for the plugin structure */
@@ -247,7 +255,7 @@ sample_new (XfcePanelPlugin *plugin)
   orientation = xfce_panel_plugin_get_orientation (plugin);
 
   
-  sample->counter = 0;
+  sample->counter = -1;
   sample->maxcounter = 4;
   
   
@@ -269,16 +277,16 @@ sample_new (XfcePanelPlugin *plugin)
   
   
     sample->combobox = gtk_combo_box_text_new_with_entry();
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "60 100 0 0");
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "40 50 50 0");
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "40 50 50 50");
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "50 50 0 0");
     gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "50 50 50 50");
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "30 50 50 50");
-    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(sample->combobox), "70 100 0 0");
   
     gtk_widget_show(sample->combobox) ;
   
     g_signal_connect(sample->combobox, "button-press-event",G_CALLBACK(entry_buttonpress_cb), sample);
-    g_signal_connect(GTK_ENTRY(gtk_bin_get_child(sample->combobox)), "key-press-event", G_CALLBACK(entry_keypress_cb), sample);
-   //  g_signal_connect(GTK_ENTRY(gtk_bin_get_child(sample->combobox)), "activate", G_CALLBACK(entry_keypress_cb), sample);
+    g_signal_connect((sample->combobox), "key-press-event", G_CALLBACK(entry_keypress_cb), sample);
     g_signal_connect(sample->combobox,"changed", G_CALLBACK(combobox_changed),sample);
   gtk_box_pack_start (GTK_BOX (sample->hvbox), sample->combobox, FALSE, FALSE, 0);
     gtk_combo_box_set_active(GTK_COMBO_BOX(sample->combobox), sample->counter);

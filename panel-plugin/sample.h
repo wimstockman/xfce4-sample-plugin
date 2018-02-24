@@ -48,6 +48,7 @@ SamplePlugin;
 void
 sample_save (XfcePanelPlugin *plugin,
              SamplePlugin    *sample);
+void tilerole(SamplePlugin *sample);
 
 G_END_DECLS
 
